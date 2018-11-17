@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户页面</title>
+</head>
+<script type="text/javascript" th:src="@{/js/jquery/jquery-1.12.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/md5/md5.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/layer/layer/layer.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var basePath = /*[[@{/}]]*/;
+    /*]]>*/
+
+    $(document).ready(function () {
+    //    添加用户按钮
+        $("#addUser").click(function () {
+            $.ajax({
+                url: basePath + "/userController/adduser",
+                data:{'userName':$("#UserName").val(),'password':md5($("#PassWord").val()),'phone':$("#phone").val()},
+                type:'POST',
+                dataType:'json',
+                success:function (result) {
+                    if (!result.success_row == 0){
+                        $("#UserName").val('');
+                        $("#PassWord").val('');
+                        $("#phone").val('');
+                        layer.alert("添加用户成功！");
+                    }else {
+                        $("#UserName").val('');
+                        $("#PassWord").val('');
+                        $("#phone").val('');
+                        layer.alert("添加用户失败！");
+                    }
+                },
+                error:function () {
+                    $("#UserName").val('');
+                    $("#PassWord").val('');
+                    $("#phone").val('');
+                    layer.alert("添加用户失败！");
+                }
+            });
+        });
+    });
+</script>
+<body>
+    <h2>Ajax添加一名用户</h2>
+    用户名:<input id="UserName" name="UserName" value="" /><br/>
+    密&nbsp;&nbsp;&nbsp;码:<input id="PassWord" name="PassWord" value="" type="password"/><br/>
+    电&nbsp;&nbsp;&nbsp;话:<input id="phone" name="phone" value="" /><br/>
+    <input  id="addUser" name="addUser" type="button" value="添加用户" />
+    <br/>
+</body>
+</html>
