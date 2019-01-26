@@ -6,7 +6,6 @@ package com.example.miaosha.controller;
 
 import com.example.miaosha.domain.User;
 import com.example.miaosha.service.UserService;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +27,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * @Description:跳转至添加用户的页面；
+     * @Auth: ZC
+     * @DateTime: 2019/1/26 10:40
+     * @Email: chao_actor@163.com
+     */
     @RequestMapping("/userpager")
     private String toviewUserPage(){
         return "userModel/userPage";
@@ -45,7 +50,7 @@ public class UserController {
     @RequestMapping("/adduser")
     public Map addUser(User user){
         HashMap<String, Object> map = new HashMap<>();
-        user.setUserId(UUID.randomUUID().toString().replace("-",""));
+        user.setUserId(UUID.randomUUID().toString().replace("-","").toUpperCase());
 //        user.setPassword(DigestUtils.md5Hex(user.getPassword())); //后台md5加密
         int i = userService.insertUser(user);
         map.put("success_row",i);
